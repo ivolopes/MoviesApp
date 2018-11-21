@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#ff8808</color>
+    <color name="colorPrimaryDark">#c76904</color>
+    <color name="colorAccent">#ffffff</color>
+    <color name="transparent_black">#80000000</color>
+    <color name="colorTabLayoutUnderline">#fcbd00</color>
+</resources>

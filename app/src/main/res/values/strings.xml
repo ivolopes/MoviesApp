@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Movies</string>
+    <string name="menu_search">Informe o nome do filme</string>
+    <string name="fantasy">Fantasia</string>
+    <string name="drama">Drama</string>
+    <string name="action">Ação</string>
+    <string name="fiction">Ficção</string>
+    <string name="movie_image_description">Imagem do card do filme</string>
+</resources>
