@@ -1,21 +1,17 @@
 package cubos.com.br.moviesapp.presenter
 
-import com.example.ivo.mvpteste.view.interfaces.MainView
 import cubos.com.br.moviesapp.model.Movie
 import cubos.com.br.moviesapp.presenter.interfaces.Presenter
 import cubos.com.br.moviesapp.service.RetrofitClient
+import cubos.com.br.moviesapp.view.interfaces.MainView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class MainPresenter( private var mainView: MainView): Presenter {
+class MainPresenter(private var mainView: MainView) : Presenter{
 
-    override fun onCreate() {
+    fun requestingObjects(query: String, page: Int){
 
-    }
-
-    fun requestingObjects(page: Int, genre: Int){
-
-        RetrofitClient.getClient().getMoviesByGenre(genre, page).subscribeOn(Schedulers.io())
+        RetrofitClient.getClient().searchMovies(query, page).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     val body = it.body()
@@ -29,6 +25,7 @@ class MainPresenter( private var mainView: MainView): Presenter {
 
     }
 
+    override fun onCreate() {}
     override fun onPause() {}
     override fun onResume() {}
     override fun onDestroy() {}

@@ -14,8 +14,8 @@ class DetailActivity : AppCompatActivity(){
 
     var movie : Movie? = null
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+    override fun onCreate(savedInstanceState: Bundle?){
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
 
         supportActionBar?.setDisplayShowHomeEnabled(true)

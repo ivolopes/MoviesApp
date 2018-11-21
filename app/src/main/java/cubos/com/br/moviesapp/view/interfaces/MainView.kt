@@ -1,6 +1,7 @@
-package com.example.ivo.mvpteste.view.interfaces
+package cubos.com.br.moviesapp.view.interfaces
 
-interface MainView : BaseView {
+import com.example.ivo.mvpteste.view.interfaces.BaseView
 
-    fun updateRecyclerView(lista: List<String>)
+interface MainView : BaseView{
+
 }
