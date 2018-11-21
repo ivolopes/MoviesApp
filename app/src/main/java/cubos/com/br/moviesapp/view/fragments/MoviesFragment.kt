@@ -1,5 +1,6 @@
 package cubos.com.br.moviesapp.view.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DefaultItemAnimator
@@ -12,6 +13,7 @@ import com.example.ivo.mvpteste.view.interfaces.MainView
 import cubos.com.br.moviesapp.R
 import cubos.com.br.moviesapp.enums.GenresEnum
 import cubos.com.br.moviesapp.model.Movie
+import cubos.com.br.moviesapp.view.activities.DetailActivity
 import cubos.com.br.moviesapp.view.adapter.MoviesAdapter
 import kotlinx.android.synthetic.main.fragment_movies.*
 
@@ -39,7 +41,9 @@ class MoviesFragment : Fragment(), MovieClicked, MainView{
     }
 
     override fun onMovieClicked(movie: Movie) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val intent = Intent(activity, DetailActivity::class.java)
+        intent.putExtra("movie", movie)
+        activity?.startActivity(intent)
     }
 
     override fun onError(message: String) {
