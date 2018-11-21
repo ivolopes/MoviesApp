@@ -6,4 +6,6 @@
     <string name="action">Ação</string>
     <string name="fiction">Ficção</string>
     <string name="movie_image_description">Imagem do card do filme</string>
+    <string name="description">Descrição</string>
+    <string name="image_detail_movie">Imagem dos detalhes do filme</string>
 </resources>

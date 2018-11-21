@@ -5,4 +5,5 @@
     <color name="colorAccent">#ffffff</color>
     <color name="transparent_black">#80000000</color>
     <color name="colorTabLayoutUnderline">#fcbd00</color>
+    <color name="background_gray">#eae8e8</color>
 </resources>
