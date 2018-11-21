@@ -14,6 +14,7 @@ import android.view.View
 import cubos.com.br.moviesapp.R
 import cubos.com.br.moviesapp.model.Movie
 import cubos.com.br.moviesapp.presenter.MainPresenter
+import cubos.com.br.moviesapp.utils.AppUtils
 import cubos.com.br.moviesapp.view.adapter.GenresTabLayoutAdapter
 import cubos.com.br.moviesapp.view.adapter.MoviesAdapter
 import cubos.com.br.moviesapp.view.fragments.MovieClicked
@@ -31,6 +32,8 @@ class MainActivity : AppCompatActivity(), MovieClicked, MainView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        setSupportActionBar(toolbar)
 
         mainPresenter = MainPresenter(this)
         initTab()
@@ -72,12 +75,12 @@ class MainActivity : AppCompatActivity(), MovieClicked, MainView {
         searchView?.setOnQueryTextListener( object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
 
-                return true;
+                return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
 
-                if( newText != null && !newText.trim().equals("")) {
+                if( newText != null && newText.trim() != "") {
                     query = newText
                     mainPresenter?.requestingObjects(query, page)
                 }
@@ -103,7 +106,7 @@ class MainActivity : AppCompatActivity(), MovieClicked, MainView {
     }
 
     override fun onError(message: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        AppUtils.showAlert(message, this)
     }
 
     override fun onMovieClicked(movie: Movie) {

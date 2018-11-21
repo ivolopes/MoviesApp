@@ -8,4 +8,6 @@
     <string name="movie_image_description">Imagem do card do filme</string>
     <string name="description">Descrição</string>
     <string name="image_detail_movie">Imagem dos detalhes do filme</string>
+    <string name="error">Erro</string>
+    <string name="ok">Ok</string>
 </resources>

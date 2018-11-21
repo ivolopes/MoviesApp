@@ -10,15 +10,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import cubos.com.br.moviesapp.presenter.MoviePresenter
-import com.example.ivo.mvpteste.view.interfaces.MovieView
+import cubos.com.br.moviesapp.view.interfaces.MovieView
 import cubos.com.br.moviesapp.R
 import cubos.com.br.moviesapp.enums.GenresEnum
 import cubos.com.br.moviesapp.model.Movie
+import cubos.com.br.moviesapp.utils.AppUtils
 import cubos.com.br.moviesapp.view.activities.DetailActivity
 import cubos.com.br.moviesapp.view.adapter.MoviesAdapter
 import kotlinx.android.synthetic.main.fragment_movies.*
 
-class MoviesFragment : Fragment(), MovieClicked, MovieView{
+class MoviesFragment : Fragment(), MovieClicked, MovieView {
 
     private var moviePresenter: MoviePresenter? = null
 
@@ -71,6 +72,7 @@ class MoviesFragment : Fragment(), MovieClicked, MovieView{
     }
 
     override fun onError(message: String) {
+        AppUtils.showAlert(message, activity!!)
         swipeRefreshLayout.isRefreshing = false
     }
 
@@ -89,10 +91,6 @@ class MoviesFragment : Fragment(), MovieClicked, MovieView{
             adapter?.notifyDataSetChanged()
         }
         swipeRefreshLayout.isRefreshing = false
-    }
-
-    override fun updateRecyclerView(lista: List<String>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     private fun setUpRecycler(){

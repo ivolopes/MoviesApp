@@ -1,6 +1,6 @@
 package cubos.com.br.moviesapp.presenter
 
-import com.example.ivo.mvpteste.view.interfaces.MovieView
+import cubos.com.br.moviesapp.view.interfaces.MovieView
 import cubos.com.br.moviesapp.model.Movie
 import cubos.com.br.moviesapp.presenter.interfaces.Presenter
 import cubos.com.br.moviesapp.service.RetrofitClient
