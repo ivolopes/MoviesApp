@@ -23,7 +23,7 @@ class MoviesFragment : Fragment(), MovieClicked, MovieView {
 
     private var moviePresenter: MoviePresenter? = null
 
-    lateinit var idGenre : GenresEnum
+    lateinit var genre : GenresEnum
     private var page = 1
     private var totalPages = 1
     private var adapter: MoviesAdapter? = null
@@ -35,6 +35,8 @@ class MoviesFragment : Fragment(), MovieClicked, MovieView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        genre = GenresEnum.value(arguments?.getInt("idGenre"))
+
         page = 1
         totalPages = 1
 
@@ -42,11 +44,11 @@ class MoviesFragment : Fragment(), MovieClicked, MovieView {
 
         setUpRecycler()
         showProgress()
-        moviePresenter?.requestingObjects(page, idGenre.id)
+        moviePresenter?.requestingObjects(page, genre.id)
 
         swipeRefreshLayout.setOnRefreshListener {
             page = 1
-            moviePresenter?.requestingObjects(page, idGenre.id)
+            moviePresenter?.requestingObjects(page, genre.id)
         }
 
         recyclerViewMovies.addOnScrollListener(object : RecyclerView.OnScrollListener(){
@@ -57,7 +59,7 @@ class MoviesFragment : Fragment(), MovieClicked, MovieView {
                 val total = recyclerView.layoutManager?.itemCount
 
                 if (dy > 0 && lastItem == total?.minus(1)) {
-                    moviePresenter?.requestingObjects(page, idGenre.id)
+                    moviePresenter?.requestingObjects(page, genre.id)
                     showProgress()
                 }
             }
@@ -111,7 +113,8 @@ class MoviesFragment : Fragment(), MovieClicked, MovieView {
     companion object {
         fun newInstance(id: Int): MoviesFragment {
             val fragment = MoviesFragment()
-            fragment.idGenre = GenresEnum.value(id)
+            val args = Bundle()
+            args.putInt("idGenre", id)
             return fragment
         }
     }
