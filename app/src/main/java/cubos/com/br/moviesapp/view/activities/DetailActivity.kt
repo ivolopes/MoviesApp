@@ -1,7 +1,6 @@
 package cubos.com.br.moviesapp.view.activities
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.squareup.picasso.Picasso

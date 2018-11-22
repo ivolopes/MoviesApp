@@ -21,7 +21,6 @@ import cubos.com.br.moviesapp.view.fragments.MovieClicked
 import cubos.com.br.moviesapp.view.interfaces.MainView
 import kotlinx.android.synthetic.main.activity_main.*
 
-
 class MainActivity : AppCompatActivity(), MovieClicked, MainView {
 
     private var mainPresenter: MainPresenter? = null
@@ -58,6 +57,7 @@ class MainActivity : AppCompatActivity(), MovieClicked, MainView {
 
         MenuItemCompat.setOnActionExpandListener(searchItem, object : MenuItemCompat.OnActionExpandListener {
             override fun onMenuItemActionExpand(item: MenuItem): Boolean {
+                showListMain()
                 return true
             }
 
@@ -67,10 +67,6 @@ class MainActivity : AppCompatActivity(), MovieClicked, MainView {
                 return true
             }
         })
-
-        searchView?.setOnSearchClickListener {
-            showListMain()
-        }
 
         searchView?.setOnQueryTextListener( object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {

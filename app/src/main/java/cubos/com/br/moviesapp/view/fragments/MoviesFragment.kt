@@ -43,7 +43,6 @@ class MoviesFragment : Fragment(), MovieClicked, MovieView {
         moviePresenter = MoviePresenter(this)
 
         setUpRecycler()
-        showProgress()
         moviePresenter?.requestingObjects(page, genre.id)
 
         swipeRefreshLayout.setOnRefreshListener {
@@ -60,7 +59,6 @@ class MoviesFragment : Fragment(), MovieClicked, MovieView {
 
                 if (dy > 0 && lastItem == total?.minus(1)) {
                     moviePresenter?.requestingObjects(page, genre.id)
-                    showProgress()
                 }
             }
         })
@@ -78,6 +76,14 @@ class MoviesFragment : Fragment(), MovieClicked, MovieView {
         swipeRefreshLayout.isRefreshing = false
     }
 
+    override fun showProgress() {
+        showProgressLocal()
+    }
+
+    override fun hideProgress() {
+        showProgressLocal(false)
+    }
+
     override fun onSuccess(obj: Any, page: Int, totalPages: Int) {
 
         @Suppress("UNCHECKED_CAST")
@@ -88,7 +94,6 @@ class MoviesFragment : Fragment(), MovieClicked, MovieView {
 
         adapter?.movies = movies
         recyclerViewMovies.post {
-            showProgress(false)
             adapter?.movies = movies
             adapter?.notifyDataSetChanged()
         }
@@ -102,7 +107,7 @@ class MoviesFragment : Fragment(), MovieClicked, MovieView {
         recyclerViewMovies.itemAnimator = DefaultItemAnimator()
     }
 
-    private fun showProgress(show: Boolean = true){
+    private fun showProgressLocal(show: Boolean = true){
         if( show ) {
             frameProgress.visibility = View.VISIBLE
         }else{
