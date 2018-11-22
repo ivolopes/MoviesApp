@@ -7,6 +7,7 @@ import android.support.v4.view.MenuItemCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView
 import android.view.Menu
 import android.view.MenuItem
@@ -26,7 +27,9 @@ class MainActivity : AppCompatActivity(), MovieClicked, MainView {
     private var mainPresenter: MainPresenter? = null
     private var query = ""
     private var page = 1
+    private var totalPages = 1
     private var adapter: MoviesAdapter? = null
+    private var isScrolled = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +40,29 @@ class MainActivity : AppCompatActivity(), MovieClicked, MainView {
         mainPresenter = MainPresenter(this)
         initTab()
         setUpRecycler()
+
+        recyclerViewMoviesMain.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+
+                if( newState == RecyclerView.SCROLL_STATE_SETTLING ){
+                    isScrolled = true
+                }
+            }
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                val lastItem = (recyclerView.layoutManager as GridLayoutManager).findLastVisibleItemPosition()
+                val total = recyclerView.layoutManager?.itemCount
+
+                if (dy > 0 && lastItem == total?.minus(1) && page < totalPages && isScrolled) {
+                    isScrolled = false
+                    page++
+                    mainPresenter?.requestingObjects(query, page)
+                }
+            }
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -64,6 +90,8 @@ class MainActivity : AppCompatActivity(), MovieClicked, MainView {
             override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
                 showListMain(false)
                 query = ""
+                page = 1
+                totalPages = 1
                 return true
             }
         })
@@ -94,6 +122,9 @@ class MainActivity : AppCompatActivity(), MovieClicked, MainView {
         @Suppress("UNCHECKED_CAST")
         val movies = obj as ArrayList<Movie>
 
+        this.totalPages = totalPages
+        this.page = page
+
         recyclerViewMoviesMain.post {
             adapter?.movies = movies
             adapter?.notifyDataSetChanged()
@@ -117,6 +148,7 @@ class MainActivity : AppCompatActivity(), MovieClicked, MainView {
             tabLayout.visibility = View.GONE
             viewPager.visibility = View.GONE
             recyclerViewMoviesMain.visibility = View.VISIBLE
+            setUpRecycler()
         }else{
             tabLayout.visibility = View.VISIBLE
             viewPager.visibility = View.VISIBLE

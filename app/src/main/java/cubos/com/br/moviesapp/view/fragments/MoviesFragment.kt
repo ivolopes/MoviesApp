@@ -66,7 +66,7 @@ class MoviesFragment : Fragment(), MovieClicked, MovieView {
                 val lastItem = (recyclerView.layoutManager as GridLayoutManager).findLastVisibleItemPosition()
                 val total = recyclerView.layoutManager?.itemCount
 
-                if (dy > 0 && lastItem == total?.minus(1) && (page*20) < totalPages && isScrolled) {
+                if (dy > 0 && lastItem == total?.minus(1) && page < totalPages && isScrolled) {
                     isScrolled = false
                     moviePresenter?.requestingObjects(page, genre.id)
                 }
@@ -130,6 +130,7 @@ class MoviesFragment : Fragment(), MovieClicked, MovieView {
             val fragment = MoviesFragment()
             val args = Bundle()
             args.putInt("idGenre", id)
+            fragment.arguments = args
             return fragment
         }
     }

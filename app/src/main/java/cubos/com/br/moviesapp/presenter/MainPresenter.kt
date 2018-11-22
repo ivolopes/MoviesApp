@@ -10,10 +10,17 @@ import io.reactivex.schedulers.Schedulers
 class MainPresenter(private var mainView: MainView) : Presenter, CallBackModel {
 
     private val mainModel = MainModel()
+    private var movies = arrayListOf<Movie>()
 
     override fun onSucessCallback(movieResponse: MovieResponse) {
+
+        if( movieResponse.page <= 1){
+            movies = arrayListOf()
+        }
+        movies.addAll(movieResponse.movies ?: ArrayList())
+
         mainView.onSuccess(
-                movieResponse.movies ?: ArrayList<Movie>(),
+                movies,
                 movieResponse.page,
                 movieResponse.totalPages)
     }
