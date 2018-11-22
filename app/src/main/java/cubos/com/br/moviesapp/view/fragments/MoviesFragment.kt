@@ -27,6 +27,7 @@ class MoviesFragment : Fragment(), MovieClicked, MovieView {
     private var page = 1
     private var totalPages = 1
     private var adapter: MoviesAdapter? = null
+    private var isScrolled = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_movies, container, false)
@@ -51,13 +52,22 @@ class MoviesFragment : Fragment(), MovieClicked, MovieView {
         }
 
         recyclerViewMovies.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+
+                if( newState == RecyclerView.SCROLL_STATE_SETTLING ){
+                    isScrolled = true
+                }
+            }
+
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
 
                 val lastItem = (recyclerView.layoutManager as GridLayoutManager).findLastVisibleItemPosition()
                 val total = recyclerView.layoutManager?.itemCount
 
-                if (dy > 0 && lastItem == total?.minus(1)) {
+                if (dy > 0 && lastItem == total?.minus(1) && (page*20) < totalPages && isScrolled) {
+                    isScrolled = false
                     moviePresenter?.requestingObjects(page, genre.id)
                 }
             }
